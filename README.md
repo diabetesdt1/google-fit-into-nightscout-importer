@@ -23,5 +23,8 @@ php -f import-google-fit-to-ns.php
 done.
 
 
+<a href="https://www.pic-upload.de" target="_blank"><img src="https://www2.pic-upload.de/img/33044613/google-fit-nightscout.jpg" title="Bilder oder Fotos hochladen"></a>
+
+
 Important! This code/classes are very old and can be optimized :-)
-You use it, how it is. 
+You use it, how it is. Or update/made it better :-)
