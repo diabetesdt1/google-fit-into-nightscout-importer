@@ -13,7 +13,9 @@ Unpack it.
 
 Adjust the Settings in "config.inc.php".
 
-The "googlefitdir", can be have Problems, when you have other characters inside the Folder names.
+The "googlefitdir", can be have Problems, when you have specoaö characters (äö..., german, chinese, russian....) inside the Folder names.
+Rename it to like /Takeout/Fit/working/
+Adjust the Name in the config.inc.php
 
 Then, call the importer-skript:
 php -f import-google-fit-to-ns.php
@@ -22,3 +24,4 @@ done.
 
 
 Important! This code/classes are very old and can be optimized :-)
+You use it, how it is. 
