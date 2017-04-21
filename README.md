@@ -32,4 +32,5 @@ php -f import-google-fit-to-ns.php
 
 done.
 
+
 Important! This code/classes are very old and can be optimized :-)
