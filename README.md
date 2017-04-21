@@ -12,7 +12,7 @@ Download your Archiv to your Server/Linux-Shell/Windows-PHP
 Unpack it.
 
 Adjust the Settings in "config.inc.php" like:
-&gt?php
+
 $config['home']               = dirname(__FILE__).'/';
 $config['googlefitdir']       = 'Takeout/Fit/aktiv/'; # Without starting Slash from $config['home']
 $config['apiurl']             = 'https://your-nightscout.domain.tld/api/v1/'; # with trailing Slash
