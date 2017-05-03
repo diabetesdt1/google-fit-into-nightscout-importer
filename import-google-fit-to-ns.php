@@ -69,7 +69,7 @@ while($file = readdir($fd))
           }
         $id     = $xml_array['Id'];
         $start  = $xml_array['Lap']['@attributes']['StartTime'];
-        $dauer  = round($xml_array['Lap']['TotalTimeSeconds']/60, 2);
+        $dauer  = round($xml_array['Lap']['TotalTimeSeconds']/60);
         $distanz= round($xml_array['Lap']['DistanceMeters'], 0);
         $typ    = $xml_array['Notes'];
         $time     = date_parse($start);
