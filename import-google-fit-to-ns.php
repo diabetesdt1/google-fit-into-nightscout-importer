@@ -57,20 +57,36 @@ $fd   = opendir($pfad);
 while($file = readdir($fd))
   {
     if(($file == '.') || ($file == '..'))
-      {
-        continue;
-       }
-        $content   = file_get_contents($pfad.$file);
+          {
+            continue;
+          }
+    $content   = file_get_contents($pfad.$file);
         $movies    = simplexml_load_string($content);
-        $xml_array = @object2array($movies->Activities->Activity);
-        if(!isset($xml_array['Lap']['@attributes']['StartTime']))
+        foreach($movies->Activities->Activity as $key => $values)
+          {
+            $xml_array = @object2array($values);
+            if(!isset($xml_array['Lap']['@attributes']['StartTime']))
           {
             continue;
           }
         $id     = $xml_array['Id'];
         $start  = $xml_array['Lap']['@attributes']['StartTime'];
-        $dauer  = round($xml_array['Lap']['TotalTimeSeconds']/60);
+        $dauer  = round($xml_array['Lap']['TotalTimeSeconds']/60, 0);
         $distanz= round($xml_array['Lap']['DistanceMeters'], 0);
+        if(($dauer >= 100) && ($distanz <= 1000))
+          {
+            if(($dauer >= $distanz) || ($dauer >= 555))
+              {
+                # it looks the timeframe is false
+                echo "\n\nPlease verify the following entry, that you walked so long and fix it manually\nI import it....\n";
+                echo "Duration OLD:    ".$dauer."\n";
+                $dauer = $dauer / 60;
+                echo "Duration NEW:     ".$dauer."\n";
+                echo "Meters:           ".$distanz."\n";
+                # yes, you can walked over 555 Minutes...
+                sleep(5);
+             }
+          }
         $typ    = $xml_array['Notes'];
         $time     = date_parse($start);
         $unixtime = mktime($time['hour'], $time['minute'], $time['second'], $time['month'], $time['day'], $time['year']);
@@ -87,16 +103,16 @@ while($file = readdir($fd))
             $last = $unixtime;
           }
         $return[$id] = array(
-                              'eventType' => 'Exercise',
-                              'duration' => $dauer,
-                              'notes' => $distanz.'M '.$xml_array['Notes'],
-                              'enteredBy' => 'Google-Fit',
-                              'insulin' => '',
-                               'carbs' => '',
-                               'glucose' => '',
-                                'NSCLIENT_ID' => 'Google-Fit',
-                                'created_at' => $start
-                             );
+                                                 'eventType' => 'Exercise',
+                                                 'duration' => $dauer,
+                                                 'notes' => $distanz.'M '.$xml_array['Notes'],
+                                                 'enteredBy' => 'Google-Fit',
+                                                 'insulin' => '',
+                                                 'carbs' => '',
+                                                 'glucose' => '',
+                                                 'NSCLIENT_ID' => 'Google-Fit',
+                                                 'created_at' => $start
+                                                 );
         $json[$id] = json_encode($return[$id]);
         # or use curl/wget/xxxx to send it to the ns-api
         $curl   = new FileStuff($config);
@@ -111,16 +127,17 @@ while($file = readdir($fd))
         else
           {
             # debug json string
-            echo $i.":    ".$json[$id]."\ndone\n";
+            echo $i.":    ".$json[$id]."\ndone\n\n";
             $i++;
           }
+      }
   }
 if((!isset($last)) || ($i === 0))
   {
     $last = ''.time().'';
     $i    = '0 "no newer then lastimport-time.txt"';
   }
-file_put_contents('./lastimport-time.txt', $last);
+file_put_contents('./lastimport-time.txt', $last-100);
 die("\n\n".'End imported '.$i.' "actions/laps/actions/walkes/xxx" :-)');
 
 # End
