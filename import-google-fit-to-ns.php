@@ -98,6 +98,10 @@ while($file = readdir($fd))
           {
             continue;
           }
+        if($distanz < $config['minmeters'])
+          {
+            continue;
+          }
         if($last < $unixtime)
           {
             $last = $unixtime;
