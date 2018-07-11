@@ -1,4 +1,15 @@
 # google-fit-into-nightscout-importer
+
+## Requirements
+Installed packages:
+* Php7.0
+* Php7.0-common
+* Php7.0-cli
+* Php7.0-json
+* Php7.0-xml
+
+
+## Instructions
 Imports downloaded tcx-Files from https://takeout.google.com/settings/takeout from Google-Fit over NightScout API into your NS.
 
 Go to: https://takeout.google.com/settings/takeout

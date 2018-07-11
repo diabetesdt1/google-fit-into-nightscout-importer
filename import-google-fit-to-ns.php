@@ -26,7 +26,7 @@ require_once './config.inc.php';
 
 if(!file_exists($config['home'].'Filestuff.class.php'))
   {
-    exit("\nERROR: File classes/Filestuff.class.php NOT found!\n");
+    exit("\nERROR: File Filestuff.class.php NOT found!\n");
   }
 @require_once $config['home'].'Filestuff.class.php';
 
@@ -110,11 +110,11 @@ while($file = readdir($fd))
                                                  'eventType' => 'Exercise',
                                                  'duration' => $dauer,
                                                  'notes' => $distanz.'M '.$xml_array['Notes'],
-                                                 'enteredBy' => 'Google-Fit',
+                                                 'enteredBy' => $config['client'],
                                                  'insulin' => '',
                                                  'carbs' => '',
                                                  'glucose' => '',
-                                                 'NSCLIENT_ID' => 'Google-Fit',
+                                                 'NSCLIENT_ID' => $config['client'],
                                                  'created_at' => $start
                                                  );
         $json[$id] = json_encode($return[$id]);
